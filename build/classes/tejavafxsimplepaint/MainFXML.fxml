@@ -17,6 +17,7 @@
                 <Menu text ="File">
                     <MenuItem text="Open" onAction="#onOpen" />
                     <MenuItem text="Save" onAction="#onSave" />
+                    <MenuItem text="Clear all" onAction="#onClearAll" />
                     <MenuItem text="Exit" onAction="#onExit" />
                 </Menu>
             </MenuBar>

@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -211,6 +209,12 @@ public class MainFXMLController implements Initializable {
         catch(IOException ex){
             showErrorMessage(ex.toString());
         }
+    }
+    
+    public void onClearAll(){
+        gcTop.clearRect(0, 0, canvasTop.getWidth(), canvasTop.getHeight());
+        gcBottom.clearRect(0, 0, canvasBottom.getWidth(),
+                canvasBottom.getHeight());
     }
     
     public void onExit(){
