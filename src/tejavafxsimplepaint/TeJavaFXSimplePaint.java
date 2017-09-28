@@ -14,14 +14,18 @@ import javafx.stage.Stage;
 /**
  *
  * @author igor
- * Last edited 27.09.2017
+ * Last edited 28.09.2017
  */
 public class TeJavaFXSimplePaint extends Application {
     private static final String TITLE_OF_PROGRAM = "TeSimplePaint";
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainFXML.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainFXML.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root);
+        ((MainFXMLController)loader.getController())
+                .bindResizeEventOfSceneToCanvas();       
         stage.setTitle(TITLE_OF_PROGRAM);
         stage.setScene(scene);
         stage.show();

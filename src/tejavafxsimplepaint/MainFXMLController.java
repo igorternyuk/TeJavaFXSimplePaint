@@ -39,8 +39,8 @@ import javax.imageio.ImageIO;
 public class MainFXMLController implements Initializable {
     DrawingMode mode = DrawingMode.PEN;
     private boolean isFirstPointSelected = false;
-    private double x1, y1, x3, y3; // x3 and y3 - for parabola by 3 points
-     
+    private double x1, y1; 
+    
     @FXML
     private ChoiceBox toolChooser;
     
@@ -64,9 +64,26 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initialize();
-    }   
+    }
+    
+    public void bindResizeEventOfSceneToCanvas(){
+        canvasBottom.getScene().widthProperty().addListener(
+                (ObservableValue<? extends Number> observableValue,
+                        Number oldSceneWidth, Number newSceneWidth) -> {
+            canvasTop.setWidth(Double.valueOf(newSceneWidth.toString()));
+            canvasBottom.setWidth(Double.valueOf(newSceneWidth.toString()));
+            
+        });
+        
+        canvasBottom.getScene().heightProperty().addListener(
+                (ObservableValue<? extends Number> observableValue,
+                        Number oldSceneHeigth, Number newSceneHeigth) -> {
+            canvasTop.setHeight(Double.valueOf(newSceneHeigth.toString()));
+            canvasBottom.setHeight(Double.valueOf(newSceneHeigth.toString()));
+        });
+    }
 
-    public void initialize() {
+    public void initialize() {        
         gcTop = canvasTop.getGraphicsContext2D();
         gcBottom = canvasBottom.getGraphicsContext2D();
         toolChooser.setItems(FXCollections.observableArrayList(
@@ -174,11 +191,11 @@ public class MainFXMLController implements Initializable {
             alert.close();
         }
     }
-
-    public void onOpen(){
+    
+     public void onOpen(){
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser
-                .ExtensionFilter("Select a file (*.png)", "*.png");
+                .ExtensionFilter("Select a file", "*.png", "*.jpg", "*.bmp");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
@@ -186,8 +203,10 @@ public class MainFXMLController implements Initializable {
                 String filePath = file.toURI().toURL().toString();
                 Image img;
                 img = new Image(file.toURI().toURL().toString());
-                gcBottom.drawImage(img, 0, 0, canvasBottom.getWidth(),
-                        canvasBottom.getHeight());
+                gcBottom.drawImage(img,
+                        (canvasBottom.getWidth() - img.getWidth()) / 2,
+                        (canvasBottom.getHeight() - img.getHeight()) / 2,
+                        img.getWidth(), img.getHeight());
             } catch (MalformedURLException ex) {
                 showErrorMessage(ex.toString());
             }

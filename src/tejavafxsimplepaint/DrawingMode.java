@@ -16,7 +16,5 @@ public enum DrawingMode {
     ELLIPSE,
     CIRCLE,
     POLYLINE,
-    ARC_BY_THREE_POINT,
-    PARABOLA_BY_THREE_POINT,
     PEN
 }
